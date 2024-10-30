@@ -1,0 +1,19 @@
+{
+    "name": "examples-test-repo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "ts-node scripts/build-examples.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^latest",
+        "comment-parser": "^latest",
+        "glob": "^latest",
+        "ts-node": "^latest",
+        "typescript": "^latest"
+    }
+}
