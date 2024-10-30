@@ -3,18 +3,29 @@ import { parse as parseComments } from "comment-parser";
 import * as fs from "fs/promises";
 import * as path from "path";
 
-async function buildExamplesIndex() {
-    // Scan all TypeScript examples
-    const files = glob.sync("typescript/**/*.ts"); // Changed to sync method
+interface ExampleMetadata {
+    id: string;
+    path: string;
+    code: string;
+    exchange: string;
+    title?: string;
+    description?: string;
+    category?: string;
+    tags?: string[];
+}
 
-    const examples = await Promise.all(
-        files.map(async (filePath) => {
+async function buildExamplesIndex(): Promise<void> {
+    // Scan all TypeScript examples
+    const files: string[] = glob.sync("typescript/**/*.ts");
+
+    const examples: ExampleMetadata[] = await Promise.all(
+        files.map(async (filePath: string) => {
             const content = await fs.readFile(filePath, "utf-8");
             const comments = parseComments(content);
             const metadata = comments[0]?.tags.reduce(
-                (acc, tag) => ({
+                (acc: Record<string, string>, tag) => ({
                     ...acc,
-                    [tag.tag]: tag.text.trim(),
+                    [tag.tag]: tag.description,
                 }),
                 {}
             );
@@ -24,7 +35,10 @@ async function buildExamplesIndex() {
                 path: filePath,
                 code: content,
                 exchange: filePath.split("/")[1],
-                ...metadata,
+                title: metadata.title,
+                description: metadata.description,
+                category: metadata.category,
+                tags: metadata.tags?.split(",").map((t) => t.trim()),
             };
         })
     );
