@@ -78,7 +78,7 @@ async function buildFileTree(basePath: string): Promise<ExampleFolder> {
 }
 
 async function buildExamplesIndex(): Promise<void> {
-    const tree = await buildFileTree("typescript");
+    const tree = await buildFileTree("examples");
 
     await fs.mkdir("public", { recursive: true });
     await fs.mkdir("public/js", { recursive: true });
