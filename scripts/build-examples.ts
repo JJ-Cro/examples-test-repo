@@ -5,7 +5,7 @@ import * as path from "path";
 
 async function buildExamplesIndex() {
     // Scan all TypeScript examples
-    const files = await glob("typescript/**/*.ts");
+    const files = glob.sync("typescript/**/*.ts"); // Changed to sync method
 
     const examples = await Promise.all(
         files.map(async (filePath) => {
