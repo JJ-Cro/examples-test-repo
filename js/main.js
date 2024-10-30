@@ -1,22 +1,61 @@
+function createTreeNode(item) {
+    const div = document.createElement("div");
+    div.className = "ml-4";
+
+    if (item.type === "folder") {
+        div.innerHTML = `
+            <div class="flex items-center py-2">
+                <button class="flex items-center focus:outline-none" onclick="toggleFolder(this)">
+                    <svg class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                    <span class="ml-2 font-medium">${item.name}</span>
+                </button>
+            </div>
+            <div class="hidden ml-4">
+                ${item.children.map((child) => createTreeNode(child).outerHTML).join("")}
+            </div>
+        `;
+    } else {
+        div.innerHTML = `
+            <div class="py-2 cursor-pointer hover:bg-gray-100 rounded px-2" onclick="showExample(${JSON.stringify(
+                item
+            )})">
+                <span class="text-blue-600">${item.name}</span>
+            </div>
+        `;
+    }
+
+    return div;
+}
+
+function toggleFolder(button) {
+    const content = button.parentElement.nextElementSibling;
+    const arrow = button.querySelector("svg");
+    content.classList.toggle("hidden");
+    arrow.classList.toggle("rotate-90");
+}
+
+function showExample(example) {
+    const content = document.getElementById("example-content");
+    content.innerHTML = `
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-2xl font-bold mb-2">${example.metadata.title || example.name}</h2>
+            <p class="text-gray-600 mb-4">${example.metadata.description || ""}</p>
+            <pre class="bg-gray-50 p-4 rounded overflow-x-auto">
+                <code>${example.code}</code>
+            </pre>
+        </div>
+    `;
+}
+
 async function loadExamples() {
     try {
         const response = await fetch("/examples-index.json");
-        const examples = await response.json();
+        const tree = await response.json();
 
         const examplesList = document.getElementById("examples-list");
-        examples.forEach((example) => {
-            const div = document.createElement("div");
-            div.className = "p-4 bg-white rounded shadow";
-            div.innerHTML = `
-                <h2 class="text-xl font-semibold">${example.title}</h2>
-                <p class="text-gray-600">${example.description}</p>
-                <div class="mt-2">
-                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">${example.exchange}</span>
-                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">${example.category}</span>
-                </div>
-            `;
-            examplesList.appendChild(div);
-        });
+        examplesList.appendChild(createTreeNode(tree));
     } catch (error) {
         console.error("Error loading examples:", error);
     }
