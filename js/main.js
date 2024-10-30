@@ -17,10 +17,16 @@ function createTreeNode(item) {
             </div>
         `;
     } else {
+        const safeItem = {
+            name: item.name,
+            code: item.code,
+            metadata: item.metadata,
+            path: item.path,
+        };
+
         div.innerHTML = `
-            <div class="py-2 cursor-pointer hover:bg-gray-100 rounded px-2" onclick="showExample(${JSON.stringify(
-                item
-            )})">
+            <div class="py-2 cursor-pointer hover:bg-gray-100 rounded px-2" 
+                onclick='showExample(${JSON.stringify(safeItem).replace(/'/g, "&apos;")})'>
                 <span class="text-blue-600">${item.name}</span>
             </div>
         `;
