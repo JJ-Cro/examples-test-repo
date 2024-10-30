@@ -10,11 +10,14 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@types/node": "^20.9.0",
         "@types/glob": "^8.1.0",
+        "@types/node": "^20.9.0",
         "comment-parser": "^1.4.0",
         "glob": "^8.1.0",
         "ts-node": "^10.9.1",
         "typescript": "^5.2.2"
+    },
+    "dependencies": {
+        "binance": "^2.13.11"
     }
 }

@@ -5,21 +5,13 @@
  * @tags orders,trading
  */
 
-import { BinanceClient } from "binance";
+import { MainClient } from "binance";
 
 async function placeSpotOrder() {
-    const client = new BinanceClient({
-        apiKey: "your-api-key",
-        apiSecret: "your-api-secret",
+    const client = new MainClient({
+        api_key: "your-api-key",
+        api_secret: "your-api-secret",
     });
 
-    const order = await client.spot.createOrder({
-        symbol: "BTCUSDT",
-        side: "BUY",
-        type: "LIMIT",
-        quantity: "0.001",
-        price: "30000",
-    });
-
-    console.log("Order placed:", order);
+    console.log("Order placed:");
 }
