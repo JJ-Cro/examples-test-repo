@@ -1,19 +1,19 @@
 {
     "name": "examples-test-repo",
     "version": "1.0.0",
-    "description": "",
+    "description": "This repository contains example code for using the Quantapi.io SDK with various cryptocurrency exchanges.",
     "main": "index.js",
     "scripts": {
-        "build": "ts-node scripts/build-examples.ts"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@types/node": "^latest",
-        "comment-parser": "^latest",
-        "glob": "^latest",
-        "ts-node": "^latest",
-        "typescript": "^latest"
+        "@types/node": "^22.8.4",
+        "comment-parser": "^1.4.1",
+        "glob": "^11.0.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.6.3"
     }
 }
